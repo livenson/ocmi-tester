@@ -1,0 +1,18 @@
+OCMI-tester allows to quickly run several tests against OCCI/CDMI-compliant servers.
+
+
+Abbreviations:
+ OCMI: Open Cloud Management Interface
+ OCCI: Open Cloud Computing Interface
+ CDMI: Cloud Data Management Interface
+
+Installation instructions:
+
+1. git clone git://github.com/...
+2. git submodule init
+3. git submodule update
+
+Running:
+
+1. Run ocmi.sh
+

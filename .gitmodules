@@ -1,0 +1,6 @@
+[submodule "libs/ogf-occi"]
+	path = libs/ogf-occi
+	url = git://git.opennebula.org/ogf-occi.git
+[submodule "libs/libcdmi-python"]
+	path = libs/libcdmi-python
+	url = git://github.com/livenson/libcdmi-python.git
