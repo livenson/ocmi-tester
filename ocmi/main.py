@@ -10,8 +10,12 @@ TITLE='OCMI-tester v%s' % VERSION
 class OCMITester(object):
 
     def __init__(self):
-        self.cdmi_server = 'sample'
-        self.occi_server = 'sample'
+        self.cdmi_server = 'unset'
+        self.cdmi_username = 'unset'
+        self.cdmi_password = 'unset'
+        self.occi_server = 'unset'
+        self.occi_input_rendering = 'unset'
+        self.occi_output_rendering = 'unset'
 
     def menu_exit(self):
         pass
@@ -33,6 +37,7 @@ class OCMITester(object):
         return None
 
     def display_main_screen(self):
+        """Display main menu of the OCMI Tester"""
         logic = {'exit': self.menu_exit,
                  'configure': self.display_configure,
                  'occi': self.display_occi,
@@ -48,19 +53,53 @@ class OCMITester(object):
                 ('Run all tests', 'runall'),
                 ],
                 42)
-
         logic[result]()
 
     def display_configure(self):
+        """Display a selection menu for OCCI/CDMI configuration"""
+        logic = {'exit': self.display_main_screen,
+                 'occi': self.display_configure_occi,
+                 'cdmi': self.display_configure_cdmi,
+                 }
+
+        result = ButtonChoiceWindow(self.screen, TITLE, 'Please, choose endpoint to configure:', \
+                [('Exit', 'exit'),
+                ('OCCI', 'occi'),
+                ('CDMI', 'cdmi'),
+                ],
+                42)
+        logic[result]()
+
+    def display_configure_occi(self):
+        """Display OCCI configuration menu"""
         occi_entry = Entry(30, self.occi_server)
-        cdmi_entry = Entry(30, self.cdmi_server)
-        command, oms_address = EntryWindow(self.screen, TITLE, 'Please, enter OCCI and CDMI endpoints',
+        occi_input_entry = Entry(30, self.occi_input_rendering)
+        occi_output_entry = Entry(30, self.occi_output_rendering)
+        command, _ = EntryWindow(self.screen, TITLE, 'Please, enter OCCI endpoint parameters',
                 [('OCCI endpoint', occi_entry),
-                 ('CDMI endpoint', cdmi_entry)], 
+                 ('OCCI input rendering', occi_input_entry),
+                 ('OCCI output rendering', occi_output_entry)], 
                 buttons = [('Save', 'save'), ('Back', 'main_menu')])
         if command == 'save':
             self.occi_server = occi_entry.value().strip()
-            self.cdmi_entry = cdmi_entry.value().strip()
+            self.occi_input_rendering = occi_input_entry.value().strip()
+            self.occi_output_rendering = occi_input_entry.value().strip()
+        self.display_main_screen()
+
+    def display_configure_cdmi(self):
+        """Display CDMI configuration menu"""
+        cdmi_entry = Entry(30, self.cdmi_server)
+        cdmi_user_entry = Entry(30, self.cdmi_username)
+        cdmi_pass_entry = Entry(30, self.cdmi_password)
+        command, _ = EntryWindow(self.screen, TITLE, 'Please, enter CDMI endpoint parameters',
+                [('CDMI endpoint', cdmi_entry),
+                 ('Username', cdmi_user_entry),
+                 ('Password', cdmi_pass_entry)], 
+                buttons = [('Save', 'save'), ('Back', 'main_menu')])
+        if command == 'save':
+            self.cdmi_server = cdmi_entry.value().strip()
+            self.cdmi_username = cdmi_user_entry.value().strip()
+            self.cdmi_password = cdmi_pass_entry.value().strip()
         self.display_main_screen()
 
     def display_occi(self):
@@ -69,7 +108,9 @@ class OCMITester(object):
         return self._display_selection(dummy_tests, "Select an OCCI test from" % dummy_tests)
 
     def display_cdmi(self):
-        pass
+        """Displays a list of CDMI tests"""
+        dummy_tests = ['CDMI test 1', 'CDMI test 2', 'CDMI test 3']
+        return self._display_selection(dummy_tests, "Select a CDMI test from" % dummy_tests)
 
     def display_run_all(self):
         pass
