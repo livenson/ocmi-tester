@@ -1,21 +1,14 @@
 #!/usr/bin/env python
 import types
-
 from snack import SnackScreen, ButtonChoiceWindow, Entry, EntryWindow, ListboxChoiceWindow
+
+from ocmi.config import c, cs
 
 VERSION = '0.0.1'
 TITLE='OCMI-tester v%s' % VERSION
 
 
 class OCMITester(object):
-
-    def __init__(self):
-        self.cdmi_server = 'unset'
-        self.cdmi_username = 'unset'
-        self.cdmi_password = 'unset'
-        self.occi_server = 'unset'
-        self.occi_input_rendering = 'unset'
-        self.occi_output_rendering = 'unset'
 
     def menu_exit(self):
         pass
@@ -72,34 +65,34 @@ class OCMITester(object):
 
     def display_configure_occi(self):
         """Display OCCI configuration menu"""
-        occi_entry = Entry(30, self.occi_server)
-        occi_input_entry = Entry(30, self.occi_input_rendering)
-        occi_output_entry = Entry(30, self.occi_output_rendering)
+        occi_entry = Entry(30, c('occi', 'server'))
+        occi_input_entry = Entry(30, c('occi', 'input_rendering'))
+        occi_output_entry = Entry(30, c('occi', 'output_rendering'))
         command, _ = EntryWindow(self.screen, TITLE, 'Please, enter OCCI endpoint parameters',
                 [('OCCI endpoint', occi_entry),
                  ('OCCI input rendering', occi_input_entry),
                  ('OCCI output rendering', occi_output_entry)], 
                 buttons = [('Save', 'save'), ('Back', 'main_menu')])
         if command == 'save':
-            self.occi_server = occi_entry.value().strip()
-            self.occi_input_rendering = occi_input_entry.value().strip()
-            self.occi_output_rendering = occi_input_entry.value().strip()
+            cs('occi', 'server', occi_entry.value().strip())
+            cs('occi', 'input_rendering', occi_input_entry.value().strip())
+            cs('occi', 'output_rendering', occi_output_entry.value().strip())
         self.display_main_screen()
 
     def display_configure_cdmi(self):
         """Display CDMI configuration menu"""
-        cdmi_entry = Entry(30, self.cdmi_server)
-        cdmi_user_entry = Entry(30, self.cdmi_username)
-        cdmi_pass_entry = Entry(30, self.cdmi_password)
+        cdmi_entry = Entry(30, c('cdmi', 'cdmi_server'))
+        cdmi_user_entry = Entry(30, c('cdmi', 'username'))
+        cdmi_pass_entry = Entry(30, c('cdmi', 'password'))
         command, _ = EntryWindow(self.screen, TITLE, 'Please, enter CDMI endpoint parameters',
                 [('CDMI endpoint', cdmi_entry),
                  ('Username', cdmi_user_entry),
                  ('Password', cdmi_pass_entry)], 
                 buttons = [('Save', 'save'), ('Back', 'main_menu')])
         if command == 'save':
-            self.cdmi_server = cdmi_entry.value().strip()
-            self.cdmi_username = cdmi_user_entry.value().strip()
-            self.cdmi_password = cdmi_pass_entry.value().strip()
+            cs('cdmi', 'server', cdmi_entry.value().strip())
+            cs('cdmi', 'username', cdmi_user_entry.value().strip())
+            cd('cdmi', 'password', cdmi_pass_entry.value().strip())
         self.display_main_screen()
 
     def display_occi(self):
