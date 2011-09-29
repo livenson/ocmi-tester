@@ -9,9 +9,10 @@ Abbreviations:
 Installation instructions:
 
 0. yum install python-newt
-1. git clone git://github.com/livenson/ocmi-tester.git
-2. git submodule init
-3. git submodule update
+1. pip install -r requirements.txt
+2. git clone git://github.com/livenson/ocmi-tester.git
+3. git submodule init
+4. git submodule update
 
 Running:
 
