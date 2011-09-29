@@ -1,0 +1,14 @@
+[cdmi]
+username=user
+password=pass
+server=http://example.com/CDMI
+
+[occi]
+input_rendering=text/occi
+output_rendering=text/occi
+server=http://example.com/OCCI
+network_category=network;scheme="http://schemas.ogf.org/occi/infrastructure#";class="kind";,ipnetwork;scheme="http://schemas.ogf.org/occi/infrastructure/network#";class="kind";
+network_attribute=occi.core.title="My Network",occi.core.summary="A short summary",occi.network.address="192.168.0.0/24",occi.network.allocation="dynamic",occi.network.vlan=1
+network_location=/network/
+
+
